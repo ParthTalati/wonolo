@@ -5,31 +5,41 @@ class AceBank:
     def __init__(self):
         self.accounts = {}
 
+    # Method to check if the account exists or not
     def assert_account_exists(self, account_number: str):
         if account_number not in self.accounts:
             raise Exception(f"Account {account_number} does not exist")
 
+    # Method to check that no transaction allowed with negative amount
     @staticmethod
     def assert_positive_amount(amount: float):
         if amount < 0:
             raise Exception("Negative amount not allowed")
 
+    # Method to create a new account
     def create_account(self, account_number: str, balance: float = 0.00) -> None:
         if account_number not in self.accounts:
             self.accounts[account_number] = balance
         else:
             raise Exception("Account already exists")
 
+    # Method to get the balance for the provided account number
     def get_balance(self, account_number: str) -> float:
         self.assert_account_exists(account_number)
         return self.accounts[account_number]
 
-    def deposit_funds(self, account_number: str, amount: float, currency: Currencies) -> None:
+    # Method to deposit amount in C$ currency
+    def deposit_funds(
+        self, account_number: str, amount: float, currency: Currencies
+    ) -> None:
         self.assert_account_exists(account_number)
         self.assert_positive_amount(amount)
         self.accounts[account_number] += currency.convert_to_cad(amount)
 
-    def withdraw_funds(self, account_number: str, amount: float, currency: Currencies) -> None:
+    # Method to withdraw money from account (in C$)
+    def withdraw_funds(
+        self, account_number: str, amount: float, currency: Currencies
+    ) -> None:
         self.assert_account_exists(account_number)
         self.assert_positive_amount(amount)
         amount_in_cad = currency.convert_to_cad(amount)
@@ -37,9 +47,11 @@ class AceBank:
             raise Exception("Not enough funds")
         self.accounts[account_number] -= amount_in_cad
 
-    def transfer_funds(self, incoming_account_number: str, out_going_account_number: str, amount: float) -> None:
+    # Method to transfer funds from one account to another
+    def transfer_funds(
+        self, incoming_account_number: str, out_going_account_number: str, amount: float
+    ) -> None:
         self.assert_account_exists(incoming_account_number)
         self.assert_account_exists(out_going_account_number)
-
         self.withdraw_funds(out_going_account_number, amount, Currencies.CAD)
         self.deposit_funds(incoming_account_number, amount, Currencies.CAD)
