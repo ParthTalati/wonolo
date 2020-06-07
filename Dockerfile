@@ -1,11 +1,9 @@
-FROM python/python:3.7
-
-FROM python/faker
-
-FROM pytest
+FROM python:3.7
 
 WORKDIR /app
 
-RUN pip3 install pytest-docker
-
 COPY . /app
+
+RUN pip3 install -r requirements.txt
+
+RUN pytest tests/test_*.py
