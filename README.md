@@ -17,7 +17,7 @@ This repository contains the implementation and Test-suite for given scenario.
 
 1. Download Docker (https://www.docker.com/products/docker-desktop)
 2. Install **Docker**
-3. Clone the git repository **git clone -- https://github.com/ParthTalati/wonolo.git**
+3. Clone the git repository with **git clone -- https://github.com/ParthTalati/wonolo.git** command
 4. **CD** into the directory where repository is cloned
 5. Run **make build** in terminal
 6. Run **make test** in terminal
