@@ -1,3 +1,5 @@
+from random import randint
+
 from app.currencies import Currencies
 
 
@@ -7,8 +9,16 @@ class AceBank:
 
     # Method to check if the account exists or not
     def assert_account_exists(self, account_number: str):
+        """ This methods checks if an account number is existing or not
+        :argument: account_number
+        :returns: True, if account exists
+        :returns: Exception, if account does not exist
+        """
+
         if account_number not in self.accounts:
             raise Exception(f"Account {account_number} does not exist")
+        else:
+            return True
 
     # Method to check that no transaction allowed with negative amount
     @staticmethod
@@ -17,9 +27,10 @@ class AceBank:
             raise Exception("Negative amount not allowed")
 
     # Method to create a new account
-    def create_account(self, account_number: str, balance: float = 0.00) -> None:
+    def create_account(self, account_number: str, balance: float = 0.00) -> str:
         if account_number not in self.accounts:
             self.accounts[account_number] = balance
+            return account_number
         else:
             raise Exception("Account already exists")
 
@@ -55,3 +66,8 @@ class AceBank:
         self.assert_account_exists(out_going_account_number)
         self.withdraw_funds(out_going_account_number, amount, Currencies.CAD)
         self.deposit_funds(incoming_account_number, amount, Currencies.CAD)
+
+    @staticmethod
+    def generate_new_account_number():
+        n = 6
+        return ''.join(["{}".format(randint(0, 9)) for _ in range(0, n)])
