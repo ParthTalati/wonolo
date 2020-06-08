@@ -9,7 +9,7 @@ class AceBank:
 
     # Method to check if the account exists or not
     def assert_account_exists(self, account_number: str):
-        """ This methods checks if an account number is existing or not
+        """ Method to checks if an account number exists
         :argument: account_number
         :returns: True, if account exists
         :returns: Exception, if account does not exist
@@ -60,14 +60,14 @@ class AceBank:
 
     # Method to transfer funds from one account to another
     def transfer_funds(
-        self, incoming_account_number: str, out_going_account_number: str, amount: float
+        self, incoming_account_number: str, out_going_account_number: str, amount: float, currency: Currencies
     ) -> None:
         self.assert_account_exists(incoming_account_number)
         self.assert_account_exists(out_going_account_number)
-        self.withdraw_funds(out_going_account_number, amount, Currencies.CAD)
-        self.deposit_funds(incoming_account_number, amount, Currencies.CAD)
+        self.withdraw_funds(out_going_account_number, amount, currency)
+        self.deposit_funds(incoming_account_number, amount, currency)
 
     @staticmethod
-    def generate_new_account_number():
-        n = 6
+    def generate_new_account_number(n=6) -> str:
+        """ :returns - A string of 6 random numbers between 0 to 9 to form an account number"""
         return ''.join(["{}".format(randint(0, 9)) for _ in range(0, n)])
